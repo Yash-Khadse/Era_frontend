@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="styles.css" />
+        <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            margin-top: 2rem;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 50px;
+            color: #333;
+        }
+
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            justify-content: center;
+        }
+
+        .card {
+            background: #171b17;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+            border: green 0.5px solid;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .image-container {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            margin: 0 auto 20px;
+            border: 3px solid #eee;
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        h2 {
+            color: #4bb920;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .social-list {
+            list-style: none;
+        }
+
+        .social-list li {
+            margin: 10px 0;
+        }
+
+        .social-list a {
+            text-decoration: none;
+            color: #4bb920;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-list a:hover {
+            color: #0077b5;
+        }
+
+        .fa {
+            margin-right: 8px;
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+<body>
+    <div id="background">
+        <nav class="bg-surface-a10 fixed w-full z-50" style="padding-top: 0.5rem;">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex items-center justify-between h-16">
+                    <div class="flex items-center space-x-8">
+                        <a href="index.html" class="nav-link">Home</a>
+                        <a href="voice.html" class="nav-link">Voice</a>
+                        <a href="https://udify.app/chat/qeh6e5fdv3aMODB1" class="nav-link">Chat</a>
+                        <a href="contact.html" class="nav-link">Contact Us</a>
+                    </div>
+                    <button class="bg-primary-a40 px-4 py-2 rounded-lg hover:bg-primary-a30 transition-colors duration-200 text-dark-a0"
+                    style="height: 2.5em; padding: 0.5rem; width: 6rem"
+                    onclick="redirectToLink('https://era-v3.vercel.app/')">
+                        Start a Call
+                    </button>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container">
+        <h1 style="color: #5ef422;">Our Team</h1>
+        
+        <div class="cards-container">
+            <!-- Card 1 -->
+            <div class="card">
+                <div class="image-container">
+                    <img src="../assests/Screenshot 2025-03-16 050345.png" alt="Team Member 1">
+                </div>
+                <h2>Nitish Baddula</h2>
+                <ul class="social-list">
+                    <li><a href="#">AI Architect</a></li>
+                    <li><a href="#"><i class="fa fa-linkedin"></i>linkedin.com/nithish-baddula</a></li>
+                    <li><a href="#"><i class="fa fa-phone"></i>+91 8074914825</a></li>
+                    <li><a href="#"><i class="fa fa-envelope"></i>john@email.com</a></li>
+                </ul>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="card">
+                <div class="image-container">
+                    <img src="../assests/Screenshot 2025-03-16 050332.png" alt="Team Member 2">
+                </div>
+                <h2>Ashiesh Mittapalli</h2>
+                <ul class="social-list">
+                    <li><a href="#">Database Developer</a></li>
+                    <li><a href="#"><i class="fa fa-linkedin"></i>linkedin.com/ashiesh-mittapalli</a></li>
+                    <li><a href="#"><i class="fa fa-phone"></i>+91 7671882680</a></li>
+                    <li><a href="#"><i class="fa fa-envelope"></i>jane@email.com</a></li>
+                </ul>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="card">
+                <div class="image-container">
+                    <img src="../assests//Screenshot 2025-03-16 050239.png" alt="Team Member 3">
+                </div>
+                <h2>Charan Kosari</h2>
+                <ul class="social-list">
+                    <li><a href="#">Backend Developer</a></li>
+                    <li><a href="#"><i class="fa fa-linkedin"></i>linkedin.com/charan-kosari</a></li>
+                    <li><a href="#"><i class="fa fa-phone"></i>+91 7993264289</a></li>
+                    <li><a href="#"><i class="fa fa-envelope"></i>mike@email.com</a></li>
+                </ul>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="card">
+                <div class="image-container">
+                    <img src="../assests/Screenshot 2025-03-16 050316.png" alt="Team Member 4">
+                </div>
+                <h2>Yash Khadse</h2>
+                <ul class="social-list">
+                    <li><a href="#">Frontend Developer</a></li>
+                    <li><a href="#"><i class="fa fa-linkedin"></i>linkedin.com/yash-khadse</a></li>
+                    <li><a href="#"><i class="fa fa-phone"></i>+91 9704640901</a></li>
+                    <li><a href="#"><i class="fa fa-envelope"></i>khadseyash4@email.com</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.globe.min.js"></script>
+
+    <script>
+      VANTA.GLOBE({
+        el: "#background",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 1000.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: 0xfc95,
+        color2: 0xff00,
+        size: 0.9,
+        backgroundColor: 0x171b17,
+      });
+    </script>
+</body>
+</html>

@@ -1,0 +1,289 @@
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;700&display=swap");
+
+:root {
+  --dark-a0: #000000;
+  --light-a0: #ffffff;
+  --primary-a0: #5ef422;
+  --primary-a10: #78f648;
+  --primary-a20: #8ef864;
+  --primary-a30: #a2f97c;
+  --primary-a40: #b4fb93;
+  --primary-a50: #c4fca9;
+  --surface-a0: #000000;
+  --surface-a10: #1e1e1e;
+  --surface-a20: #353535;
+  --surface-a30: #4e4e4e;
+  --surface-a40: #696969;
+  --surface-a50: #858585;
+}
+
+body {
+  margin: 0;
+  font-family: "Montserrat", sans-serif;
+  min-height: 100vh;
+}
+
+.nav-link {
+  color: #bdfca0;
+  text-decoration: none;
+  position: relative;
+  transition: color 0.2s;
+  padding-bottom: 0.5rem;
+}
+
+.nav-link::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 2px;
+  background: #bdfca0;
+  transition: width 0.3s;
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+}
+
+.nav-link:hover::after {
+  width: 100%;
+}
+
+.max-w-7xl {
+  max-width: 90%;
+  width: 100%;
+}
+
+.mx-auto {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.px-4 {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.space-x-8 > * + * {
+  margin-left: 2rem;
+}
+
+.h-16 {
+  height: 4rem;
+}
+
+.bg-primary-a40 {
+  background-color: var(--primary-a40);
+}
+
+.hover\:bg-primary-a30:hover {
+  background-color: var(--primary-a30);
+}
+
+.rounded-lg {
+  border-radius: 0.5rem;
+}
+
+.transition-colors {
+  transition-property: background-color, color;
+  transition-duration: 0.2s;
+}
+
+.text-dark-a0 {
+  color: var(--dark-a0);
+}
+
+.pt-24 {
+  padding-top: 0rem;
+}
+
+.text-center {
+  text-align: center;
+}
+
+.py-20 {
+  padding-top: 5rem;
+  padding-bottom: 5rem;
+}
+
+.text-8xl {
+  font-size: 6rem;
+  line-height: 1;
+}
+
+.bg-clip-text {
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
+.text-transparent {
+  color: transparent;
+}
+
+.bg-gradient-to-r {
+  background-image: linear-gradient(
+    to right,
+    var(--tw-gradient-from),
+    var(--tw-gradient-to)
+  );
+}
+
+.from-primary-a40 {
+  --tw-gradient-from: var(--primary-a40);
+}
+
+.to-primary-a50 {
+  --tw-gradient-to: var(--primary-a50);
+}
+
+.mb-6 {
+  margin-bottom: 1.5rem;
+}
+
+.h-12 {
+  height: 3rem;
+}
+
+.text-2xl {
+  font-size: 1.5rem;
+}
+
+.text-primary-a20 {
+  color: #bdfca0;
+}
+
+.grid {
+  display: grid;
+}
+
+.grid-cols-1 {
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+}
+
+.gap-8 {
+  gap: 2rem;
+}
+
+.max-w-4xl {
+  max-width: 56rem;
+}
+
+.mb-16 {
+  margin-bottom: 4rem;
+}
+
+.icon-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.w-12 {
+  width: 3rem;
+}
+
+.h-12 {
+  height: 3rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+.text-lg {
+  font-size: 1.125rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.text-4xl {
+  font-size: 2.25rem;
+}
+
+.cta-button {
+  background-color: var(--primary-a40);
+  color: #000000;
+  padding: 1.5rem 2rem; /* Increased height */
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.cta-button:hover {
+  background-color: var(--primary-a50);
+}
+
+@media (min-width: 768px) {
+  .md\:grid-cols-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+  
+}
+
+@media (max-width: 768px) {
+  .text-8xl {
+    font-size: 4rem;
+  }
+
+  .nav-link {
+    font-size: 0.8rem;
+  }
+
+
+  .text-4xl {
+    font-size: 2rem;
+  }
+
+  .text-2xl {
+    font-size: 1.25rem;
+  }
+
+  .space-x-8 > * + * {
+    margin-left: 1rem;
+  }
+
+  .py-20 {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+}
+
+.type-animation {
+  display: inline-block;
+  overflow: hidden;
+  white-space: nowrap;
+  border-right: 2px solid;
+  animation: typing 1s steps(40, end), blink-caret 0.75s step-end infinite;
+}
+
+@keyframes typing {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100%;
+  }
+}
+
+@keyframes blink-caret {
+  from,
+  to {
+    border-color: transparent;
+  }
+  50% {
+    border-color: var(--primary-a20);
+  }
+}

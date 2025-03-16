@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Voice Wave Animation with Start/Stop</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body {
+        width: 100%;
+        height: 100vh; /* Full viewport height */
+        margin: 0;
+        position: relative;
+      }
+      /* Visualizer container */
+      #animation-container {
+        width: 400px;
+        height: 400px;
+        background-color: none;
+        position: relative;
+        overflow: hidden;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      #animation-container #text {
+        position: absolute;
+        font-size: 72px;
+        font-family: "Arial", sans-serif;
+        color: #fff;
+        text-align: center;
+        width: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+      .bar {
+        width: 2px;
+        background-color: #5ef422;
+        position: absolute;
+        bottom: 50%;
+        transform-origin: bottom center;
+      }
+      /* Controls styling */
+      #controls {
+        position: absolute;
+        bottom: 70px;
+        right: 125px;
+        z-index: 1000;
+      }
+      #controls button {
+        margin: 0 5px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        background-color: #8ef864;
+      }
+      /* Response container styling */
+      #response-container {
+        position: absolute;
+        top: 70px;
+        left: 75%;
+        transform: translateX(-50%);
+        background: rgba(0, 0, 0, 0.7);
+        color: #fff;
+        padding: 10px 20px;
+        border-radius: 10px;
+        font-family: Arial, sans-serif;
+        font-size: 20px;
+        text-align: left;
+      }
+      /* Audio preview styling */
+      #audioResponse {
+        position: absolute;
+        bottom: 140px;
+        left: 75%;
+        transform: translateX(-50%);
+        max-width: 900px;
+      }
+      /* Error message styling */
+      #error-message {
+        position: absolute;
+        top: 120px;
+        left: 20px;
+        background: rgba(255, 0, 0, 0.7);
+        color: white;
+        padding: 10px;
+        border-radius: 5px;
+        font-family: Arial, sans-serif;
+        z-index: 1000;
+      }
+
+      .cont {
+        display: flex;
+        flex-direction: row;
+        justify-content: start;
+        align-items: center;
+        height: 90vh;
+        width: 100%;
+      }
+      .left {
+        width: 100%;
+      }
+      .right {
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="background">
+      <nav class="bg-surface-a10 fixed w-full z-50" style="padding-top: 0.5rem">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <div class="flex items-center space-x-8">
+              <a href="index.html" class="nav-link">Home</a>
+              <a href="voice.html" class="nav-link">Voice</a>
+              <a href="https://udify.app/chat/qeh6e5fdv3aMODB1" class="nav-link">Chat</a>
+              <a href="contact.html" class="nav-link">Contact Us</a>
+            </div>
+            <button
+              class="bg-primary-a40 px-4 py-2 rounded-lg hover:bg-primary-a30 transition-colors duration-200 text-dark-a0"
+              style="
+                height: 2.5em;
+                padding-right: 0;
+                padding: 0.5rem;
+                width: 5.5rem;
+              "
+              onclick="redirectToLink('https://era-v3.vercel.app/')"
+            >
+              Start a Call
+            </button>
+          </div>
+        </div>
+      </nav>
+      <div class="cont">
+        <div class="left">
+          <div id="error-message"></div>
+          <div id="animation-container">
+            <div id="text">ERA</div>
+          </div>
+        </div>
+        <div class="right">
+          <!-- Response container to display user and AI text -->
+          <div id="response-container"></div>
+          <audio id="audioResponse" controls></audio>
+          <div id="controls">
+            <button id="startButton" disabled>Start Speaking</button>
+            <button id="stopButton" disabled>Stop Speaking</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Socket.IO client library -->
+    <script src="https://cdn.socket.io/4.6.1/socket.io.min.js"></script>
+    <script>
+      // Get UI elements
+      const errorMessage = document.getElementById("error-message");
+      const startButton = document.getElementById("startButton");
+      const stopButton = document.getElementById("stopButton");
+      const responseContainer = document.getElementById("response-container");
+      const audioResponse = document.getElementById("audioResponse");
+
+      let mediaRecorder;
+      let audioChunks = [];
+      let streamGlobal;
+
+      // Set up Socket.IO connection to backend
+      const socket = io("http://127.0.0.1:5000");
+      socket.on("connect", () => {
+        console.log("Connected to backend");
+      });
+      socket.on("error", (err) => {
+        console.error("Socket error:", err);
+        errorMessage.textContent = "Socket error: " + err;
+      });
+      // Handle backend response: display texts and audio preview
+      socket.on("audio_response", (data) => {
+        console.log("Received response from backend:", data);
+        responseContainer.innerHTML = `<strong>User:</strong> ${data.user}<br><strong>AI:</strong> ${data.ai}`;
+        audioResponse.src = "data:audio/wav;base64," + data.audio;
+
+        audioResponse.play().catch((error) => {
+          console.error("Audio playback error:", error);
+        });
+        // Re-enable Start button for another request
+        startButton.disabled = false;
+        stopButton.disabled = true;
+      });
+
+      // Set up visualizer using getUserMedia
+      navigator.mediaDevices
+        .getUserMedia({ audio: true })
+        .then((stream) => {
+          streamGlobal = stream;
+          startButton.disabled = false; // Enable Start button when mic is ready
+
+          // Set up AudioContext and Analyser for visualizer
+          const audioContext = new (window.AudioContext ||
+            window.webkitAudioContext)();
+          const analyser = audioContext.createAnalyser();
+          const source = audioContext.createMediaStreamSource(stream);
+          source.connect(analyser);
+
+          analyser.fftSize = 512;
+          const bufferLength = analyser.frequencyBinCount;
+          const dataArray = new Uint8Array(bufferLength);
+          const container = document.getElementById("animation-container");
+
+          function createBars() {
+            for (let i = 0; i < bufferLength; i++) {
+              const bar = document.createElement("div");
+              bar.classList.add("bar");
+              container.appendChild(bar);
+            }
+          }
+
+          function animate() {
+            analyser.getByteFrequencyData(dataArray);
+            const bars = document.querySelectorAll(".bar");
+            bars.forEach((bar, index) => {
+              let height = dataArray[index] * 0.5;
+              height = Math.min(height, 450);
+              bar.style.height = `${height}px`;
+              bar.style.transform = `rotate(${
+                index * (360 / bufferLength)
+              }deg) translateY(-150px)`;
+            });
+            requestAnimationFrame(animate);
+          }
+
+          createBars();
+          animate();
+
+          // Start button event: start recording
+          startButton.addEventListener("click", () => {
+            audioChunks = [];
+            mediaRecorder = new MediaRecorder(stream);
+            mediaRecorder.ondataavailable = (event) => {
+              if (event.data && event.data.size > 0) {
+                audioChunks.push(event.data);
+              }
+            };
+            mediaRecorder.onstart = () => {
+              console.log("Recording started");
+              startButton.disabled = true;
+              stopButton.disabled = false;
+              // Clear any previous response
+              responseContainer.innerHTML = "";
+            };
+            mediaRecorder.onstop = () => {
+              console.log("Recording stopped");
+              // Combine audio chunks into a blob and send to backend
+              const audioBlob = new Blob(audioChunks, { type: "audio/wav" });
+              audioBlob.arrayBuffer().then((buffer) => {
+                socket.emit("audio_chunk", buffer);
+                socket.emit("audio_stream_end", {}); // Signal that streaming is complete
+              });
+            };
+            mediaRecorder.start(1000); // Record in 1-second slices
+          });
+
+          // Stop button event: stop recording
+          stopButton.addEventListener("click", () => {
+            if (mediaRecorder && mediaRecorder.state === "recording") {
+              mediaRecorder.stop();
+              stopButton.disabled = true;
+            }
+          });
+        })
+        .catch((err) => {
+          console.error("Error accessing audio stream:", err);
+          errorMessage.textContent = "Error accessing audio stream: " + err;
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.globe.min.js"></script>
+
+    <script>
+      VANTA.GLOBE({
+        el: "#background",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 1000.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: 0xfc95,
+        color2: 0xff00,
+        size: 0.9,
+        backgroundColor: 0x171b17,
+      });
+    </script>
+  </body>
+</html>

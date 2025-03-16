@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ERA AI Assistant</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary-color: #3498db;
+        --secondary-color: #2c3e50;
+        --bot-bg: #ffffff;
+        --user-bg: #3498db;
+        --sidebar-bg: #1a1a1a;
+        --input-bg: #f0f4f8;
+      }
+
+      .chat-container {
+        width: 95%;
+        max-width: 1200px;
+        height: 95vh;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        border: green 1px solid;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+        display: flex;
+        overflow: hidden;
+        margin: 2rem auto;
+        backdrop-filter: blur(10px);
+      }
+
+      .sidebar {
+        width: 280px;
+        background: var(--sidebar-bg);
+        padding: 20px;
+        border-right: 1px solid rgba(255, 255, 255, 0.1);
+        position: relative;
+        color: #5ef422;
+      }
+
+      .chat-messages {
+        flex: 1;
+        width: 95%;
+        padding: 20px;
+        overflow-y: hidden;
+        background: var(--input-bg);
+        position: relative;
+      }
+
+      .message {
+        margin-bottom: 25px;
+        display: flex;
+        gap: 15px;
+        animation: slideIn 0.3s ease-out;
+      }
+
+      .message.user {
+        flex-direction: row-reverse;
+      }
+
+      .mssg {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+      }
+
+      .avatar {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        background: #b4fb93;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        flex-shrink: 0;
+      }
+
+      .avatar.bot {
+        background: #78f648;
+        color: #1a1a1a;
+      }
+
+      .message-content {
+        max-width: 70%;
+        padding: 15px 20px;
+        border-radius: 20px;
+        position: relative;
+        line-height: 1.6;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+
+      .bot .message-content {
+        background: var(--bot-bg);
+        border-bottom-left-radius: 5px;
+      }
+
+      .user .message-content {
+        background: var(--user-bg);
+        color: white;
+        border-bottom-right-radius: 5px;
+      }
+
+      .chat-input {
+        padding: 20px;
+        background: white;
+        display: flex;
+        gap: 15px;
+        position: sticky;
+        bottom: 0;
+        box-shadow: 0 -5px 15px rgba(0, 0, 0, 0.03);
+      }
+
+      .chat-input-container {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        background: var(--input-bg);
+        border-radius: 30px;
+        padding: 0 20px;
+        padding-right: 0px;
+        transition: all 0.3s ease;
+      }
+
+      .chat-input-container:focus-within {
+        box-shadow: 0 0 0 2px #8ef864;
+      }
+
+      input {
+        flex: 1;
+        padding: 15px;
+        border: none;
+        background: transparent;
+        outline: none;
+        font-size: 16px;
+      }
+
+      button {
+        padding: 15px 30px;
+        background: #8ef864;
+        color: #1a1a1a;
+        border: none;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      button:hover {
+        background: #2980b9;
+        transform: translateY(-1px);
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* Mobile Responsive */
+      @media (max-width: 768px) {
+        .chat-container {
+          flex-direction: column;
+          height: 95vh;
+          margin: 1rem auto;
+        }
+
+        .sidebar {
+          width: 100%;
+          height: 200px;
+          border-right: none;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .chat-messages {
+          padding: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="background">
+      <nav class="bg-surface-a10 fixed w-full z-50"style="padding-top: 0.5rem;">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <div class="flex items-center space-x-8">
+              <a href="index.html" class="nav-link">Home</a>
+              <a href="voice.html" class="nav-link">Voice</a>
+              <a href="#" class="nav-link">Chat</a>
+              <a href="contact.html" class="nav-link">Contact Us</a>
+            </div>
+            <button
+              class="bg-primary-a40 px-4 py-2 rounded-lg hover:bg-primary-a30 transition-colors duration-200 text-dark-a0"
+              style="height: 2.5em;padding-right: 0; padding: 0.5rem; width: 5.5rem"
+            >
+              Start a Call
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <main class="pt-24">
+        <div class="chat-container">
+          <div class="sidebar">
+            <div class="sidebar-header">
+              <h3>Chat History</h3>
+              <button onclick="startNewChat()">
+                <i class="fas fa-plus"></i> New
+              </button>
+            </div>
+            <div class="chat-history" id="previous-messages">
+              <!-- Chat history items will be dynamically added here -->
+            </div>
+          </div>
+
+          <div class="mssg">
+            <div class="chat-messages" id="chat-messages">
+              <div class="message bot">
+                <div class="avatar bot">ERA</div>
+                <div class="message-content">
+                  Hello! I'm ERA, your AI Financial Assistant. How can I help
+                  you today?
+                </div>
+              </div>
+            </div>
+
+            <div class="chat-input">
+              <div class="chat-input-container">
+                <input
+                  type="text"
+                  id="user-input"
+                  placeholder="Ask me anything about loans..."
+                />
+              </div>
+              <button onclick="sendMessage()">
+                <i class="fas fa-paper-plane"></i> Send
+              </button>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      const chatMessages = document.getElementById("chat-messages");
+      const userInput = document.getElementById("user-input");
+
+      function addMessage(content, isUser = false) {
+        const messageDiv = document.createElement("div");
+        messageDiv.className = `message ${isUser ? "user" : "bot"}`;
+        messageDiv.innerHTML = `
+          <div class="avatar ${isUser ? "user" : "bot"}">${
+          isUser ? "You" : "ERA"
+        }</div>
+          <div class="message-content">${content}</div>
+        `;
+
+        chatMessages.appendChild(messageDiv);
+        chatMessages.scrollTop = chatMessages.scrollHeight;
+      }
+
+      async function sendMessage() {
+        const message = userInput.value.trim();
+        if (!message) return;
+
+        addMessage(message, true);
+        userInput.value = "";
+
+        try {
+          const response = await fetch("https://api.dify.ai/v1/chat", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer YOUR_API_KEY",
+            },
+            body: JSON.stringify({ message }),
+          });
+
+          const data = await response.json();
+          addMessage(data.reply || "I'm sorry, I didn't understand that.");
+        } catch (error) {
+          addMessage("Oops! There was an error processing your request.");
+        }
+      }
+
+      async function loadChatHistory() {
+        try {
+          const response = await fetch("https://api.dify.ai/v1/chat/history", {
+            method: "GET",
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: "Bearer YOUR_API_KEY",
+            },
+          });
+
+          if (response.ok) {
+            const data = await response.json();
+            data.messages.forEach((msg) => {
+              addMessage(msg.content, msg.isUser);
+            });
+          } else {
+            console.error("Error: Unable to load chat history.");
+          }
+        } catch (error) {
+          console.error("Error:", error);
+        }
+      }
+
+      function startNewChat() {
+        if (confirm("Are you sure you want to start a new chat?")) {
+          chatMessages.innerHTML = `
+            <div class="message bot">
+              <div class="avatar bot">ERA</div>
+              <div class="message-content">
+                Hello! I'm ERA, your AI Financial Assistant. How can I help you today?
+              </div>
+            </div>
+          `;
+        }
+      }
+
+      window.onload = () => {
+        loadChatHistory();
+        userInput.focus();
+      };
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.globe.min.js"></script>
+
+    <script>
+      VANTA.GLOBE({
+        el: "#background",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 1000.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: 0xfc95,
+        color2: 0xff00,
+        size: 0.9,
+        backgroundColor: 0x171b17,
+      });
+    </script>
+  </body>
+</html>

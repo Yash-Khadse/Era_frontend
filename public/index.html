@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ERA Communication</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div id="background">
+      <nav class="bg-surface-a10 fixed w-full z-50" style="padding-top: 0.5rem">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="flex items-center justify-between h-16">
+            <div class="flex items-center space-x-8">
+              <a href="#" class="nav-link">Home</a>
+              <a href="voice.html" class="nav-link">Voice</a>
+              <a href="https://udify.app/chat/qeh6e5fdv3aMODB1" class="nav-link"
+                >Chat</a
+              >
+              <a href="contact.html" class="nav-link">Contact Us</a>
+            </div>
+            <button
+              style="height: 2.5em; padding: 0.5rem; width: 6rem"
+              class="bg-primary-a40 btn1 px-4 py-2 rounded-lg hover:bg-primary-a30 transition-colors duration-200 text-dark-a0"
+              onclick="redirectToLink('https://era-v3.vercel.app/')"
+            >
+              Start a Call
+            </button>
+          </div>
+        </div>
+      </nav>
+
+      <main>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div class="text-center py-20">
+            <h1
+              class="text-8xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-primary-a40 to-primary-a50 mb-6"
+            >
+              ERA
+            </h1>
+            <div class="h-12 mb-12">
+              <p style="display: inline" class="text-2xl text-primary-a20">
+                The New Era of&nbsp;
+              </p>
+              <span
+                id="type-animation"
+                class="text-2xl text-primary-a20"
+                style="padding-bottom: 2rem"
+              ></span>
+            </div>
+
+            <div
+              class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto mb-16"
+            >
+              <div class="icon-card" href="voice.html">
+                <svg
+                  class="w-12 h-12 text-primary-a40 mb-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  style="color: #bcfb9e"
+                  onclick="window.location.href='voice.html'"
+                >
+                  <path
+                    fill-rule="evenodd"
+                    clip-rule="evenodd"
+                    d="M12 14.2857C13.4229 14.2857 14.5714 13.1371 14.5714 11.7143V6.57143C14.5714 5.14857 13.4229 4 12 4C10.5771 4 9.42857 5.14857 9.42857 6.57143V11.7143C9.42857 13.1371 10.5771 14.2857 12 14.2857ZM11.1429 6.57143C11.1429 6.1 11.5286 5.71429 12 5.71429C12.4714 5.71429 12.8571 6.1 12.8571 6.57143V11.7143C12.8571 12.1943 12.48 12.5714 12 12.5714C11.5286 12.5714 11.1429 12.1857 11.1429 11.7143V6.57143ZM16.5429 11.7143H18C18 14.6371 15.6686 17.0543 12.8571 17.4743V20.2857H11.1429V17.4743C8.33143 17.0543 6 14.6371 6 11.7143H7.45714C7.45714 14.2857 9.63429 16.0857 12 16.0857C14.3657 16.0857 16.5429 14.2857 16.5429 11.7143Z"
+                    fill="#000000"
+                  />
+                </svg>
+                <span
+                  class="text-lg font-medium text-primary-a50"
+                  onclick="window.location.href='voice.html'"
+                  style="color: #bcfb9e"
+                  >Voice</span
+                >
+              </div>
+              <div class="icon-card">
+                <svg
+                  class="w-12 h-12 mb-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  style="color: #bcfb9e"
+                  onclick="redirectToLink('https://era-v3.vercel.app/')"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                  />
+                </svg>
+                <span
+                  class="text-lg font-medium text-primary-a50"
+                  style="color: #bcfb9e"
+                  onclick="redirectToLink('https://era-v3.vercel.app/')"
+                  >Call</span
+                >
+              </div>
+              <div class="icon-card">
+                <svg
+                  class="w-12 h-12 text-primary-a40 mb-4"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                  style="color: #bcfb9e"
+                  onclick="window.location.href='https://udify.app/chat/qeh6e5fdv3aMODB1'"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
+                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                  />
+                </svg>
+                <span
+                  class="text-lg font-medium text-primary-a50"
+                  style="color: #bcfb9e"
+                  onclick="window.location.href='https://udify.app/chat/qeh6e5fdv3aMODB1'"
+                  >Chat</span
+                >
+              </div>
+            </div>
+
+            <h2
+              class="text-4xl font-bold mb-12 bg-clip-text text-transparent bg-gradient-to-r from-primary-a40 to-primary-a50"
+            >
+              Redefine the business with us
+            </h2>
+
+            <button class="cta-button" style="font-size: large">
+              Try a free call to ERA (+1 844-741-5700)
+            </button>
+
+            <div class="pricing" style="color: #bcfb9e;margin-top: 2;">
+              <h3 class="" style="display: inline-flex;margin-top: 2;">Pricing</h3>
+              <li>Voice: ₹2 per min</li>
+              <li>Call: ₹3 per min</li>
+              <li>Chat: ₹1 per min</li>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+
+    <script>
+      function redirectToLink(url) {
+        window.location.href = url;
+      }
+
+      const messages = [
+        "Calling with AI",
+        "Real-Time AI Interaction",
+        "Customer Support",
+      ];
+
+      let index = 0;
+      const element = document.getElementById("type-animation");
+
+      function typeText() {
+        const text = messages[index];
+        element.innerHTML = "";
+        let charIndex = 0;
+
+        function typeChar() {
+          if (charIndex < text.length) {
+            element.innerHTML += text.charAt(charIndex);
+            charIndex++;
+            setTimeout(typeChar, 50);
+          } else {
+            setTimeout(eraseText, 2000);
+          }
+        }
+
+        typeChar();
+      }
+
+      function eraseText() {
+        let text = element.innerHTML;
+
+        function eraseChar() {
+          if (text.length > 0) {
+            text = text.slice(0, -1);
+            element.innerHTML = text;
+            setTimeout(eraseChar, 30);
+          } else {
+            index = (index + 1) % messages.length;
+            setTimeout(typeText, 500);
+          }
+        }
+
+        eraseChar();
+      }
+
+      typeText();
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/three@0.134.0/build/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanta@0.5.24/dist/vanta.globe.min.js"></script>
+
+    <script>
+      VANTA.GLOBE({
+        el: "#background",
+        mouseControls: true,
+        touchControls: true,
+        gyroControls: false,
+        minHeight: 1000.0,
+        minWidth: 200.0,
+        scale: 1.0,
+        scaleMobile: 1.0,
+        color: 0xfc95,
+        color2: 0xff00,
+        size: 0.9,
+        backgroundColor: 0x171b17,
+      });
+    </script>
+  </body>
+</html>
